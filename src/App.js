@@ -4,16 +4,27 @@ import TodoForm from "./TodoForm";
 import TodoList from "./TodoList";
 import TodoFooter from "./TodoFooter";
 
+// 1. datark enter vochmiban complated
+// 2. text duble ylni chani
+// 3. ptichken
+// 4. yes / no
+// 5. edit
+// debugger;
+
 function reducer(state, action) {
   if (action.type === "add") {
-    return [
-      ...state,
-      {
-        id: Math.random(),
-        text: action.payload.text,
-        isCompleted: false,
-      },
-    ];
+    if (action.payload.text.length !== 0) {
+      return [
+        ...state,
+        {
+          id: Math.random(),
+          text: action.payload.text,
+          isCompleted: false,
+        },
+      ];
+    } else {
+      return [...state];
+    }
   } else if (action.type === "delete") {
     return state.filter((t) => t.id !== action.payload.id);
   } else if (action.type === "clear-completed") {
@@ -29,6 +40,7 @@ function reducer(state, action) {
 }
 
 function App() {
+  const [input, setInput] = useState("");
   const [todos, dispatch] = useReducer(reducer, [
     {
       id: Math.random(),
